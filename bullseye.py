@@ -2,7 +2,7 @@
               Bullseye
 A* Path Finding Visualizer Using Pygame
 '''
-import pygame
+import pygame, os
 from queue import PriorityQueue
 
 #window
@@ -14,6 +14,7 @@ TOTAL_ROWS = 30
 C_WIDTH = W_Width//TOTAL_ROWS
 PATH_FOUND = 0
 CLOCK = pygame.time.Clock()
+Arial = os.path.join("font", "arial.ttf")
 
 #font
 pygame.font.init()
@@ -95,18 +96,18 @@ class Cube :
                     pygame.draw.rect(win, START, (
                     self.x + C_WIDTH // 2 - self.size // 2, self.y + C_WIDTH // 2 - self.size // 2, self.size,
                     self.size))
-                    FONT = pygame.font.SysFont('arial', round(self.size * 1.2), bold=True)
+                    FONT = pygame.font.Font(Arial, round(self.size * 1.2), bold=True)
                     icon = FONT.render("►", 1, FADE_ICON)
                     center = icon.get_rect(center=(self.x+self.width//2, self.y+self.width//2))
                     WIN.blit(icon, center)
                 else :
                     pygame.draw.rect(win, START, (self.x, self.y, C_WIDTH, C_WIDTH))
-                    FONT = pygame.font.SysFont('arial', round(C_WIDTH * 1.2), bold=True)
+                    FONT = pygame.font.Font(Arial, round(C_WIDTH * 1.2), bold=True)
                     icon = FONT.render("►", 1, FADE_ICON)
                     center = icon.get_rect(center=(self.x + self.width // 2, self.y + self.width // 2))
                     WIN.blit(icon, center)
             else:
-                FONT = pygame.font.SysFont('arial', round(C_WIDTH * 1.2), bold=True)
+                FONT = pygame.font.Font(Arial, round(C_WIDTH * 1.2), bold=True)
                 icon = FONT.render("►", 1, ICON)
                 center = icon.get_rect(center=(self.x + self.width // 2, self.y + self.width // 2))
                 WIN.blit(icon, center)
@@ -127,18 +128,18 @@ class Cube :
                     pygame.draw.rect(win, PATH, (
                         self.x + C_WIDTH // 2 - self.size // 2, self.y + C_WIDTH // 2 - self.size // 2, self.size,
                         self.size))
-                    FONT = pygame.font.SysFont('arial', round(self.size * 1.2), bold=True)
+                    FONT = pygame.font.Font(Arial, round(self.size * 1.2), bold=True)
                     icon = FONT.render(SYMBOL, 1, ICON)
                     center = icon.get_rect(center=(self.x + self.width // 2, self.y + self.width // 2))
                     WIN.blit(icon, center)
                 else:
                     pygame.draw.rect(win, PATH, (self.x, self.y, C_WIDTH, C_WIDTH))
-                    FONT = pygame.font.SysFont('arial', round(C_WIDTH * 1.2), bold=True)
+                    FONT = pygame.font.Font(Arial, round(C_WIDTH * 1.2), bold=True)
                     icon = FONT.render(SYMBOL, 1, ICON)
                     center = icon.get_rect(center=(self.x + self.width // 2, self.y + self.width // 2))
                     WIN.blit(icon, center)
             else :
-                FONT = pygame.font.SysFont('arial', round(C_WIDTH * 1.2), bold=True)
+                FONT = pygame.font.Font(Arial, round(C_WIDTH * 1.2), bold=True)
                 icon = FONT.render(SYMBOL, 1, ICON)
                 center = icon.get_rect(center=(self.x + self.width // 2, self.y + self.width // 2))
                 WIN.blit(icon, center)
