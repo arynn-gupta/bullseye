@@ -1,5 +1,5 @@
 '''
-Bullseye
+              Bullseye
 A* Path Finding Visualizer Using Pygame
 '''
 import pygame
@@ -11,7 +11,7 @@ WIN = pygame.display.set_mode((W_Width, W_Width))
 pygame.display.set_caption("Bullseye")
 
 TOTAL_ROWS = 30
-C_WIDTH = W_Width//TOTAL_ROWS #width of each cube on grid
+C_WIDTH = W_Width//TOTAL_ROWS
 PATH_FOUND = 0
 CLOCK = pygame.time.Clock()
 
@@ -86,13 +86,9 @@ class Cube :
         global PATH_FOUND
 
         #draw each cube
-
         if self.name == "unvisited" :
             pygame.draw.rect(win, UNVISITED, (self.x, self.y, self.width, self.width))
-
         if self.name == "start" :
-
-            # animate start symbol when visualizer is ran
             if PATH_FOUND >= 0.5:
                 self.size += 1
                 if self.size <= C_WIDTH:
@@ -101,7 +97,7 @@ class Cube :
                     self.size))
                     FONT = pygame.font.SysFont('arial', round(self.size * 1.2), bold=True)
                     icon = FONT.render("►", 1, FADE_ICON)
-                    center = icon.get_rect(center=(self.x + self.width//2, self.y + self.width//2))
+                    center = icon.get_rect(center=(self.x+self.width//2, self.y+self.width//2))
                     WIN.blit(icon, center)
                 else :
                     pygame.draw.rect(win, START, (self.x, self.y, C_WIDTH, C_WIDTH))
@@ -109,7 +105,6 @@ class Cube :
                     icon = FONT.render("►", 1, FADE_ICON)
                     center = icon.get_rect(center=(self.x + self.width // 2, self.y + self.width // 2))
                     WIN.blit(icon, center)
-
             else:
                 FONT = pygame.font.SysFont('arial', round(C_WIDTH * 1.2), bold=True)
                 icon = FONT.render("►", 1, ICON)
@@ -119,8 +114,6 @@ class Cube :
             SYMBOL = "ʘ"
             if PATH_FOUND == 1:
                 self.size += 1
-
-                #change end point symbol according to the path
                 for neighbor in self.neighbors:
                     if neighbor.name == "path" and neighbor.y > self.y:
                         SYMBOL = "▲"
@@ -130,7 +123,6 @@ class Cube :
                         SYMBOL = "►"
                     elif neighbor.name == "path" and neighbor.x > self.x:
                         SYMBOL = "◄"
-
                 if self.size <= C_WIDTH:
                     pygame.draw.rect(win, PATH, (
                         self.x + C_WIDTH // 2 - self.size // 2, self.y + C_WIDTH // 2 - self.size // 2, self.size,
@@ -145,27 +137,23 @@ class Cube :
                     icon = FONT.render(SYMBOL, 1, ICON)
                     center = icon.get_rect(center=(self.x + self.width // 2, self.y + self.width // 2))
                     WIN.blit(icon, center)
-
             else :
                 FONT = pygame.font.SysFont('arial', round(C_WIDTH * 1.2), bold=True)
                 icon = FONT.render(SYMBOL, 1, ICON)
                 center = icon.get_rect(center=(self.x + self.width // 2, self.y + self.width // 2))
                 WIN.blit(icon, center)
-
         if self.name == "barrier" :
             self.size += 1
-            if self.size <= C_WIDTH :
+            if self.size<= C_WIDTH :
                 pygame.draw.rect(win, BARRIER, (self.x + C_WIDTH // 2 - self.size // 2 , self.y + C_WIDTH // 2 - self.size // 2, self.size, self.size))
             else :
                 pygame.draw.rect(win, BARRIER, (self.x, self.y, C_WIDTH, C_WIDTH))
-
         if self.name == "path" :
             self.size += 1
             if self.size <= C_WIDTH:
                 pygame.draw.rect(win, PATH, (self.x, self.y, C_WIDTH, C_WIDTH))
             else:
                 pygame.draw.rect(win, PATH, (self.x, self.y, C_WIDTH, C_WIDTH))
-
         if self.name == "closed":
             self.size += 1
             if self.size <= C_WIDTH :
@@ -174,7 +162,6 @@ class Cube :
                     self.size))
             else:
                 pygame.draw.rect(win, CLOSED, (self.x, self.y, C_WIDTH - 1, C_WIDTH - 1))
-
         if self.name == "open" :
             self.size += 1
             rect_color = CLOSED
@@ -213,18 +200,14 @@ def draw_path(came_from , current, draw) :
     global PATH_FOUND
     PATH_FOUND = 0.5
     path_list = []
-
     #backtrack current cube
     while current in came_from :
         current = came_from[current]
         path_list.insert(0, current)
-
-    #animate the path
     for cube in path_list[1:] :
         CLOCK.tick(20)
         cube.make_path()
         draw()
-
     PATH_FOUND = 1
 
 def algorithm(draw, grid, start, end) :
@@ -334,12 +317,12 @@ def main(win, w_width, total_rows) :
 
             if pygame.mouse.get_pressed()[0] : #Left_click
                 pos = pygame.mouse.get_pos()
-                row, col = get_cube_pos(pos, w_width, total_rows)
+                row , col = get_cube_pos(pos, w_width, total_rows)
                 cube = grid[row][col]
-                if not start and cube != end:
+                if not start and cube!=end:
                     cube.make_start()
                     start = cube
-                elif not end and cube != start:
+                elif not end and cube!=start:
                     cube.make_end()
                     end = cube
                 elif start != cube and end != cube :
@@ -347,7 +330,7 @@ def main(win, w_width, total_rows) :
 
             elif pygame.mouse.get_pressed()[2] : #Right_click
                 pos = pygame.mouse.get_pos()
-                row, col = get_cube_pos(pos, w_width, total_rows)
+                row , col = get_cube_pos(pos, w_width, total_rows)
                 cube = grid[row][col]
                 cube.size = 0
                 PATH_FOUND = 0
@@ -384,5 +367,4 @@ def main(win, w_width, total_rows) :
     pygame.quit()
     quit()
 
-if __name__ == '__main__' :
-    main(WIN, W_Width, TOTAL_ROWS)
+main(WIN, W_Width, TOTAL_ROWS)
